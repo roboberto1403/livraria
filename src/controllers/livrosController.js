@@ -6,14 +6,15 @@ class LivrosController {
 
     static async listarLivros (req, res, next) {
         try {
-            const { limite = 5, pagina = 1 } = req.query;
+          const buscaLivros = livro.find()
+            .populate('autor');
+          
+          //  Armazenando o resultado para ser utilizado pelo midware de paginação
+          req.resultado = buscaLivros;
 
-            const listaLivros = await livro.find()
-              .skip((pagina -1) * limite)
-              .limit(limite)
-              .populate('autor')
-              .exec();
-            res.status(200).json(listaLivros);
+          // Next é necessário para o a continuidade da execução dessa rota ocorrer num midware (de paginação neste caso)
+          next();
+
         } catch (erro) {
             next(erro);
         }
@@ -84,11 +85,14 @@ class LivrosController {
 
         try {
           if (busca !== null){
-            const listaLivros = await livro
+            const listaLivros = livro
               .find(busca)
               .populate('autor');
 
-            res.status(200).json(listaLivros);
+            // Mesma logica de antes, primeiro buscamos o resultado depois passamo adiante para o midware
+            req.resultado = listaLivros;
+
+            next();
           } else {
             res.status(200).json([]);
           }
