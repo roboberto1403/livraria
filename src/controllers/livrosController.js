@@ -6,8 +6,7 @@ class LivrosController {
 
     static async listarLivros (req, res, next) {
         try {
-          const buscaLivros = livro.find()
-            .populate('autor');
+          const buscaLivros = livro.find();
           
           //  Armazenando o resultado para ser utilizado pelo midware de paginação
           req.resultado = buscaLivros;
@@ -86,8 +85,7 @@ class LivrosController {
         try {
           if (busca !== null){
             const listaLivros = livro
-              .find(busca)
-              .populate('autor');
+              .find(busca);
 
             // Mesma logica de antes, primeiro buscamos o resultado depois passamo adiante para o midware
             req.resultado = listaLivros;
