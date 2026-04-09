@@ -6,8 +6,9 @@ class UsuariosController {
 
     static async favoritarLivro (req, res, next) {
       try {
-        const id = req.params.id;
-        const usuarioModificado = await usuario.findByIdAndUpdate(id, { $addToSet: { livros_favoritos: req.body.livro } }, { returnDocument: 'after' });
+        const usuarioId = req.params.usuario;
+        const livroId = req.params.livro;
+        const usuarioModificado = await usuario.findByIdAndUpdate(usuarioId, { $addToSet: { livros_favoritos: livroId } }, { returnDocument: 'after' });
         
         if (usuarioModificado !== null) {
         res.status(200).json({ message: "Livro favoritado com sucesso!", usuario: usuarioModificado })
@@ -21,8 +22,9 @@ class UsuariosController {
 
     static async desfavoritarLivro (req, res, next) {
       try {
-        const id = req.params.id;
-        const usuarioModificado = await usuario.findByIdAndUpdate(id, { $pull: { livros_favoritos: req.body.livro } }, { returnDocument: 'after' });
+        const usuarioId = req.params.usuario;
+        const livroId = req.params.livro;
+        const usuarioModificado = await usuario.findByIdAndUpdate(usuarioId, { $pull: { livros_favoritos: livroId } }, { returnDocument: 'after' });
         
         if (usuarioModificado !== null) {
         res.status(200).json({ message: "Livro desfavoritado com sucesso!", usuario: usuarioModificado })

@@ -9,8 +9,8 @@ router.get("/usuarios/:id", UsuariosController.encontrarUsuarioPorId);
 router.get("/usuarios/:id/favoritos", UsuariosController.listarFavoritosPorId);
 router.post("/usuarios", UsuariosController.criarUsuario);
 router.patch("/usuarios/:id", UsuariosController.atualizarUsuario);
-router.patch("/usuarios/:id/favoritar", UsuariosController.favoritarLivro);
+router.post("/usuarios/:usuario/favoritar/:livro", UsuariosController.favoritarLivro);
 router.delete("/usuarios/:id", UsuariosController.deletarUsuario);
-router.delete("/usuarios/:id/desfavoritar", UsuariosController.desfavoritarLivro);
+router.delete("/usuarios/:usuario/desfavoritar/:livro", UsuariosController.desfavoritarLivro);
 
 export default router;
